@@ -1,0 +1,147 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.winning-message {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+.board {
+  width: 600px;
+  height: 600px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (100px)[3];
+      grid-template-columns: repeat(3, 100px);
+  -ms-grid-rows: (100px)[3];
+      grid-template-rows: repeat(3, 100px);
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  justify-items: center;
+}
+
+.cell {
+  height: 100%;
+  width: 100%;
+  border: 1px solid black;
+  background-color: #fff;
+  cursor: pointer;
+  -webkit-transition: background 0.3s ease;
+  transition: background 0.3s ease;
+}
+
+.cell:nth-child(1),
+.cell:nth-child(2),
+.cell:nth-child(3) {
+  border-top: none;
+}
+
+.cell:nth-child(9),
+.cell:nth-child(8),
+.cell:nth-child(7) {
+  border-bottom: none;
+}
+
+.cell:nth-child(3n + 1) {
+  border-left: none;
+}
+
+.cell:nth-child(3n + 3) {
+  border-right: none;
+}
+
+.cell.x {
+  background: url(../images/stop_circle-24px.svg) no-repeat;
+  background-size: cover;
+}
+
+.cell.tic {
+  background: url(../images/check-24px.svg) no-repeat;
+  background-size: cover;
+}
+
+.cell.x,
+.cell.tic {
+  cursor: not-allowed;
+}
+
+#mode-select {
+  position: absolute;
+  top: 0;
+  left: 0;
+  outline: none;
+}
+
+.input-container {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+label {
+  margin: 1rem 1rem 0 1rem;
+}
+
+input {
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  padding: 0.2rem;
+  font-size: 1.2rem;
+  width: auto;
+  background: transparent;
+}
+
+button {
+  border: 1px solid black;
+  outline: none;
+  margin: 2rem 2rem 0 1rem;
+  cursor: pointer;
+  padding: 0.2rem;
+  font-size: 1.2rem;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  background: #fff;
+}
+
+button:focus {
+  background: #524e4e;
+  color: white;
+}
+
+.p1-name,
+.p2-name,
+button {
+  display: none;
+}
+/*# sourceMappingURL=style.css.map */
