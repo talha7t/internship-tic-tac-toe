@@ -22,35 +22,58 @@ const winCombinations = [
   [2, 4, 6],
 ];
 
+let p1Name = null;
+let p2Name = null;
 let ticTurn = true;
 
 /*--------------------------------EVENT HANDLERS------------------------------------- */
 
 mode.addEventListener("change", modeSelect);
+
 /* ---------------------------------FUNCTIONS-------------------------------------*/
 
 function modeSelect() {
+  //function to start game according to mode selected
   if (mode.value == "pvp") {
-    // console.log("pvp");
     p1Label.style.display = "block";
     p2Label.style.display = "block";
     gameStart.style.display = "block";
-    startGamePvP();
+
+    gameStart.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      p1Name = document.querySelector(".player1-name").value;
+      p2Name = document.querySelector(".player2-name").value;
+
+      cellElements.forEach((cell) => {
+        cell.classList.add("game-started");
+      });
+
+      startGamePvP();
+    });
   }
 }
 
 function startGamePvP() {
-  //starting game
+  //function to start pvp starting game
+
+  p1Label.style.display = "none";
+  p2Label.style.display = "none";
+  gameStart.style.display = "none";
 
   cellElements.forEach((cell) => {
+    // cell.classList.add("game-started");
     cell.addEventListener("click", clickHandler, { once: true });
   });
 }
 
 function clickHandler(e) {
+  // function to handle click events on the board
+
   const cell = e.target;
   const currentClass = ticTurn ? ticClass : xClass;
-  //place mark
+
+  //place mark on the board
   placeMark(cell, currentClass);
 
   //check for win
@@ -89,7 +112,7 @@ function toggleTurn() {
 }
 
 function winCells(currentClass) {
-  //function to get cells of winning side
+  // function to get cells of winning side
   return winCombinations.find((combination) => {
     return combination.every((index) => {
       return cellElements[index].classList.contains(currentClass);
