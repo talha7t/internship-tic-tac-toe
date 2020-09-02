@@ -144,4 +144,8 @@ button:focus {
 button {
   display: none;
 }
+
+.finished-game {
+  cursor: not-allowed;
+}
 /*# sourceMappingURL=style.css.map */

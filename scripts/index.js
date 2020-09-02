@@ -26,9 +26,6 @@ let ticTurn = true;
 
 /*--------------------------------EVENT HANDLERS------------------------------------- */
 
-// gameStart.addEventListener("click", (e) => {
-//   e.preventDefault;
-// });
 mode.addEventListener("change", modeSelect);
 /* ---------------------------------FUNCTIONS-------------------------------------*/
 
@@ -59,7 +56,15 @@ function clickHandler(e) {
   //check for win
   if (checkWin(currentClass)) {
     winMessage.innerText = `${currentClass} wins`;
-    console.log(winBack(currentClass));
+
+    cellElements.forEach((cell) => {
+      cell.removeEventListener("click", clickHandler);
+    });
+    let winRow = winCells(currentClass);
+
+    winRow.forEach((index) => {
+      cellElements[index].style.backgroundColor = "rgba(20, 240, 20, 0.685)";
+    });
   }
 
   //toggle turns
@@ -82,15 +87,12 @@ function checkWin(currentClass) {
 function toggleTurn() {
   ticTurn = !ticTurn;
 }
-let ins = [];
-let winBack = (currentClass) => {
-  ins.push(
-    winCombinations.some((combination) => {
-      combination.every((index) => {
-        cellElements[index].classList.contains(currentClass);
-      });
-    })
-  );
 
-  return ins;
-};
+function winCells(currentClass) {
+  //function to get cells of winning side
+  return winCombinations.find((combination) => {
+    return combination.every((index) => {
+      return cellElements[index].classList.contains(currentClass);
+    });
+  });
+}

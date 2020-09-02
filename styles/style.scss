@@ -66,13 +66,12 @@ body {
 
 .cell.x {
   background: url(../images/stop_circle-24px.svg) no-repeat;
-  // ,  rgba(224, 18, 18, 0.63);
   background-size: cover;
 }
 
 .cell.tic {
   background: url(../images/check-24px.svg) no-repeat;
-  // ,rgba(20, 240, 20, 0.685);
+
   background-size: cover;
 }
 
@@ -91,7 +90,6 @@ body {
 }
 
 // player(s) name input
-
 .input-container {
   position: absolute;
   left: 0;
@@ -133,4 +131,8 @@ button:focus {
 .p2-name,
 button {
   display: none;
+}
+
+.finished-game {
+  cursor: not-allowed;
 }
