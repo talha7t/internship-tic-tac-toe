@@ -19,7 +19,7 @@ const winCombinations = [
   [6, 7, 8],
   [0, 3, 6],
   [1, 4, 7],
-  [3, 5, 8],
+  [2, 5, 8],
   [0, 4, 8],
   [2, 4, 6],
 ];
@@ -28,7 +28,9 @@ const cellIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 let p1Name = null;
 let p2Name = null;
 let userClass = null;
+let computerClass = null;
 let ticTurn = true;
+let userTurn = true;
 
 /*--------------------------------EVENT HANDLERS------------------------------------- */
 
@@ -71,30 +73,14 @@ function modeSelect() {
           "Please Enter your Name";
       } else {
         startGamePvC();
-        cellElements.forEach((cell) => {
-          cell.classList.add("game-started");
-        });
       }
-
-      //   turnMessage.innerText = p1Name + `'s turn`;
-      cellElements.forEach((cell) => {
-        cell.classList.add("game-started");
-      });
     });
   }
 }
 
-function startGamePvP() {
-  //function to start pvp starting game
-  document.querySelector(".input-error").style.display = "none";
-  p1Label.style.display = "none";
-  p2Label.style.display = "none";
-  gameStart.style.display = "none";
-
-  cellElements.forEach((cell) => {
-    cell.addEventListener("click", pvpClickHandler, { once: true });
-  });
-}
+/*-------------------------------------------------------------------------------------------------------------------------
+                                                      PVC Code
+---------------------------------------------------------------------------------------------------------------------------*/
 
 function startGamePvC() {
   //function to start PVC game
@@ -104,32 +90,92 @@ function startGamePvC() {
   gameStart.style.display = "none";
   markContainer.style.display = "block";
 
+  //listening to clicks on mark container
   markContainer.addEventListener("click", (e) => {
     document.querySelector(".mark-select-heading").style.display = "none";
     if (e.target.classList.contains("tic-mark")) {
       markContainer.style.display = "none";
       userClass = "tic";
+      computerClass = "x";
+      cellElements.forEach((cell) => {
+        cell.classList.add("game-started");
+      });
     } else if (e.target.classList.contains("x-mark")) {
       markContainer.style.display = "none";
       userClass = "x";
+      computerClass = "tic";
+      cellElements.forEach((cell) => {
+        cell.classList.add("game-started");
+      });
     }
   });
 
   cellElements.forEach((cell) => {
-    // cell.classList.add("game-started");
     cell.addEventListener("click", pvcClickHandler, { once: true });
   });
 }
 
 function pvcClickHandler(e) {
   const cell = e.target;
-  currentClass = userClass;
+  currentClass = userTurn ? userClass : computerClass;
 
   // placeMark
   placeMark(cell, currentClass);
 
-  //remove clicked index from cellIndices
+  //checkwin
+  if (checkWin(currentClass)) {
+    currentClass == userClass
+      ? (winMessage.innerText = p1Name + " wins")
+      : (winMessage.innerText = "Computer wins");
+
+    cellElements.forEach((cell) => {
+      cell.classList.add("game-finished");
+      cell.removeEventListener("click", pvcClickHandler);
+    });
+
+    let winRow = winCells(currentClass);
+
+    winRow.forEach((index) => {
+      cellElements[index].style.backgroundColor = "rgba(20, 240, 20, 0.685)";
+    });
+  }
+
+  //removeIndex
+
   removeIndex(cell);
+
+  //toggle turn
+
+  toggleTurn();
+
+  //remove clicked index from cellIndices
+  //
+}
+
+function removeIndex(cell) {
+  cellIndices.forEach((index) => {
+    if (cell.classList.contains(index)) {
+      cellIndices.splice(cellIndices.indexOf(index), 1);
+    }
+  });
+  console.log(cellIndices);
+}
+
+/*----------------------------------------------------------------------------------------------------
+                                              PVP CODE
+----------------------------------------------------------------------------------------------------*/
+
+function startGamePvP() {
+  //function to start pvp starting game
+
+  document.querySelector(".input-error").style.display = "none";
+  p1Label.style.display = "none";
+  p2Label.style.display = "none";
+  gameStart.style.display = "none";
+
+  cellElements.forEach((cell) => {
+    cell.addEventListener("click", pvpClickHandler, { once: true });
+  });
 }
 
 function pvpClickHandler(e) {
@@ -184,7 +230,11 @@ function checkWin(currentClass) {
 }
 
 function toggleTurn() {
+  //toggle turn inn pvp
   ticTurn = !ticTurn;
+
+  //toggle turn in pvc
+  userTurn = !userTurn;
 }
 
 function winCells(currentClass) {
