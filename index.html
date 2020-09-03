@@ -7,6 +7,7 @@
     <title>Document</title>
   </head>
   <body>
+    <!-- GAME BOARD -->
     <h1 class="winning-message"></h1>
     <div class="board">
       <div class="cell 0"></div>
@@ -20,11 +21,15 @@
       <div class="cell 8"></div>
     </div>
 
+    <!-- MODE SELECTION -->
+
     <select name="" id="mode-select">
       <option value="">Select Mode</option>
       <option value="pvp">Player VS Player</option>
       <option value="pvc">Player VS Computer</option>
     </select>
+
+    <!-- USER NAME(S) INPUT -->
 
     <div class="input-container">
       <label for="" class="p1-name">
@@ -40,19 +45,19 @@
       <button id="start-game" type="button">Start Game</button>
     </div>
 
+    <!-- DISPLAY ERRORS IN INPUT(S) -->
     <h2 class="input-error"></h2>
 
+    <!-- DISPLAY USER'S TURN -->
     <h2 class="turn-message"></h2>
 
     <!----------------------------PVC mode------------------------------>
 
-    <!-- mark-container -->
+    <!-- MARK SELECTION -->
     <div class="mark-container">
       <div class="tic-mark"></div>
       <div class="x-mark"></div>
     </div>
-
-    <!-- mark selection heading -->
 
     <h2 class="mark-select-heading">Please Select a Mark</h2>
 

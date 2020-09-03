@@ -23,7 +23,7 @@ const winCombinations = [
   [0, 4, 8],
   [2, 4, 6],
 ];
-const cellIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+let cellIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
 let p1Name = null;
 let p2Name = null;
@@ -145,20 +145,30 @@ function pvcClickHandler(e) {
   removeIndex(cell);
 
   //toggle turn
-
-  toggleTurn();
-
-  //remove clicked index from cellIndices
-  //
 }
 
 function removeIndex(cell) {
+  //remove clicked index from cellIndices
   cellIndices.forEach((index) => {
     if (cell.classList.contains(index)) {
       cellIndices.splice(cellIndices.indexOf(index), 1);
     }
   });
-  console.log(cellIndices);
+  computerTurn(cellIndices);
+}
+
+function computerTurn(cellIndices) {
+  // function to add ccomputer mark at random cells
+
+  //generating random number between current length of cellIndices
+  let computerMark = Math.floor(Math.random() * cellIndices.length);
+
+  let index = cellIndices[computerMark];
+
+  //adding computer class tp the randomly generated index
+  cellElements[index].classList.add(computerClass);
+  //removing element at randomly generated index
+  cellIndices.splice(computerMark, 1);
 }
 
 /*----------------------------------------------------------------------------------------------------

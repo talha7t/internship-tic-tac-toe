@@ -58,7 +58,7 @@ body {
   pointer-events: visible;
 }
 
-// remove cell borders
+/*------------ remove cell borders-------------------*/
 
 .cell:nth-child(1),
 .cell:nth-child(2),
@@ -80,7 +80,7 @@ body {
   border-right: none;
 }
 
-//styling check and o
+/*---------------- TIC AND O STYLING-----------------------*/
 
 .cell.x {
   background: url(../images/stop_circle-24px.svg) no-repeat;
@@ -182,6 +182,7 @@ button {
   display: none;
 }
 
+// TIC AND O STYLING FOR SELECTION IN PVC
 .tic-mark,
 .x-mark {
   height: 100px;

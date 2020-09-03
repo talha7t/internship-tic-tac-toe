@@ -72,6 +72,7 @@ body {
   pointer-events: visible;
 }
 
+/*------------ remove cell borders-------------------*/
 .cell:nth-child(1),
 .cell:nth-child(2),
 .cell:nth-child(3) {
@@ -92,6 +93,7 @@ body {
   border-right: none;
 }
 
+/*---------------- TIC AND O STYLING-----------------------*/
 .cell.x {
   background: url(../images/stop_circle-24px.svg) no-repeat;
   background-size: cover;
