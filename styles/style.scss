@@ -10,6 +10,12 @@ body {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  background: rgb(66, 223, 144);
+  background: linear-gradient(
+    45deg,
+    rgba(66, 223, 144, 1) 0%,
+    rgba(20, 158, 142, 1) 100%
+  );
 }
 
 .winning-message {
@@ -17,6 +23,9 @@ body {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
 }
 
 .board {
@@ -34,11 +43,15 @@ body {
 .cell {
   height: 100%;
   width: 100%;
-  border: 1px solid black;
-  background-color: #fff;
+  border: 2px solid #fff;
+  background-color: transparent;
   cursor: pointer;
   pointer-events: none;
   transition: background 0.3s ease;
+}
+
+.cell:hover {
+  background-color: rgb(65, 59, 59);
 }
 
 .game-started {
@@ -76,7 +89,6 @@ body {
 
 .cell.tic {
   background: url(../images/check-24px.svg) no-repeat;
-
   background-size: cover;
 }
 
@@ -89,9 +101,13 @@ body {
 
 #mode-select {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
   outline: none;
+  height: 1.5rem;
+  cursor: pointer;
+  font-size: 1.1rem;
 }
 
 // player(s) name input
@@ -104,11 +120,15 @@ body {
 
 label {
   margin: 1rem 1rem 0 1rem;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
 input {
   border: none;
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid white;
+  color: white;
   outline: none;
   padding: 0.2rem;
   font-size: 1.2rem;
@@ -116,20 +136,24 @@ input {
   background: transparent;
 }
 
-// button
-input[type="submit"] {
-  border: 1px solid black;
+button {
+  // border: 1px solid black;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(15, 11, 11, 0.3), 0 0 15px rgba(15, 11, 11, 0.3);
+  color: #fff;
   outline: none;
   margin: 2rem 2rem 0 1rem;
   cursor: pointer;
-  padding: 0.2rem;
+  padding: 0.5rem;
   font-size: 1.2rem;
   transition: all 0.3s ease;
-  background: #fff;
+  background: rgb(34, 241, 69);
 }
 
-button:focus {
-  background: rgb(82, 78, 78);
+.input-error {
+  position: absolute;
+  top: 20%;
   color: white;
 }
 
@@ -139,6 +163,63 @@ button:focus {
   display: none;
 }
 
-.finished-game {
+//turn message
+
+.turn-message {
+  position: absolute;
+  top: 20%;
+  color: white;
+}
+
+/*------------------------PVC MODE---------------------------*/
+
+.mark-container {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 2rem;
+  display: none;
+}
+
+.tic-mark,
+.x-mark {
+  height: 100px;
+  width: 100px;
+  background: url(../images/check-24px.svg) no-repeat, #fff;
+  background-size: cover;
+  border: 2px solid black;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+.x-mark {
+  background: url(../images/stop_circle-24px.svg) no-repeat, #fff;
+  background-size: cover;
+}
+
+.tic-mark:hover {
+  background: url(../images/check-24px.svg) no-repeat, rgb(180, 178, 178);
+  background-size: cover;
+}
+.x-mark:hover {
+  background: url(../images/stop_circle-24px.svg) no-repeat, rgb(180, 178, 178);
+  background-size: cover;
+}
+
+// markk selection heading
+
+.mark-select-heading {
+  position: absolute;
+  color: #fff;
+  top: 20%;
+  display: none;
+}
+
+/*------------------------GAME FINISHED----------------------*/
+
+.game-finished {
   cursor: not-allowed;
 }

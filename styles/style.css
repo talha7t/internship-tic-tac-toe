@@ -18,6 +18,8 @@ body {
           align-items: center;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  background: #42df90;
+  background: linear-gradient(45deg, #42df90 0%, #149e8e 100%);
 }
 
 .winning-message {
@@ -26,6 +28,9 @@ body {
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
 }
 
 .board {
@@ -51,12 +56,16 @@ body {
 .cell {
   height: 100%;
   width: 100%;
-  border: 1px solid black;
-  background-color: #fff;
+  border: 2px solid #fff;
+  background-color: transparent;
   cursor: pointer;
   pointer-events: none;
   -webkit-transition: background 0.3s ease;
   transition: background 0.3s ease;
+}
+
+.cell:hover {
+  background-color: #413b3b;
 }
 
 .game-started {
@@ -100,9 +109,14 @@ body {
 
 #mode-select {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 10%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
   outline: none;
+  height: 1.5rem;
+  cursor: pointer;
+  font-size: 1.1rem;
 }
 
 .input-container {
@@ -115,11 +129,15 @@ body {
 
 label {
   margin: 1rem 1rem 0 1rem;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
 input {
   border: none;
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid white;
+  color: white;
   outline: none;
   padding: 0.2rem;
   font-size: 1.2rem;
@@ -127,20 +145,25 @@ input {
   background: transparent;
 }
 
-input[type="submit"] {
-  border: 1px solid black;
+button {
+  border: none;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 5px rgba(15, 11, 11, 0.3), 0 0 15px rgba(15, 11, 11, 0.3);
+          box-shadow: 0 0 5px rgba(15, 11, 11, 0.3), 0 0 15px rgba(15, 11, 11, 0.3);
+  color: #fff;
   outline: none;
   margin: 2rem 2rem 0 1rem;
   cursor: pointer;
-  padding: 0.2rem;
+  padding: 0.5rem;
   font-size: 1.2rem;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
-  background: #fff;
+  background: #22f145;
 }
 
-button:focus {
-  background: #524e4e;
+.input-error {
+  position: absolute;
+  top: 20%;
   color: white;
 }
 
@@ -150,7 +173,61 @@ button:focus {
   display: none;
 }
 
-.finished-game {
+.turn-message {
+  position: absolute;
+  top: 20%;
+  color: white;
+}
+
+/*------------------------PVC MODE---------------------------*/
+.mark-container {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  margin: 2rem;
+  display: none;
+}
+
+.tic-mark,
+.x-mark {
+  height: 100px;
+  width: 100px;
+  background: url(../images/check-24px.svg) no-repeat, #fff;
+  background-size: cover;
+  border: 2px solid black;
+  cursor: pointer;
+  -webkit-transition: background 0.3s ease;
+  transition: background 0.3s ease;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+.x-mark {
+  background: url(../images/stop_circle-24px.svg) no-repeat, #fff;
+  background-size: cover;
+}
+
+.tic-mark:hover {
+  background: url(../images/check-24px.svg) no-repeat, #b4b2b2;
+  background-size: cover;
+}
+
+.x-mark:hover {
+  background: url(../images/stop_circle-24px.svg) no-repeat, #b4b2b2;
+  background-size: cover;
+}
+
+.mark-select-heading {
+  position: absolute;
+  color: #fff;
+  top: 20%;
+  display: none;
+}
+
+/*------------------------GAME FINISHED----------------------*/
+.game-finished {
   cursor: not-allowed;
 }
 /*# sourceMappingURL=style.css.map */
