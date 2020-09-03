@@ -23,9 +23,11 @@ const winCombinations = [
   [0, 4, 8],
   [2, 4, 6],
 ];
+const cellIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
 let p1Name = null;
 let p2Name = null;
+let userClass = null;
 let ticTurn = true;
 
 /*--------------------------------EVENT HANDLERS------------------------------------- */
@@ -69,13 +71,15 @@ function modeSelect() {
           "Please Enter your Name";
       } else {
         startGamePvC();
+        cellElements.forEach((cell) => {
+          cell.classList.add("game-started");
+        });
       }
-      //  else {
+
       //   turnMessage.innerText = p1Name + `'s turn`;
-      //   cellElements.forEach((cell) => {
-      //     cell.classList.add("game-started");
-      //   });
-      // }
+      cellElements.forEach((cell) => {
+        cell.classList.add("game-started");
+      });
     });
   }
 }
@@ -104,17 +108,28 @@ function startGamePvC() {
     document.querySelector(".mark-select-heading").style.display = "none";
     if (e.target.classList.contains("tic-mark")) {
       markContainer.style.display = "none";
-      console.log("tic selected");
+      userClass = "tic";
     } else if (e.target.classList.contains("x-mark")) {
       markContainer.style.display = "none";
-      console.log("x clicked");
+      userClass = "x";
     }
   });
 
-  // cellElements.forEach((cell) => {
-  //   // cell.classList.add("game-started");
-  //   cell.addEventListener("click", pvcClickHandler, { once: true });
-  // });
+  cellElements.forEach((cell) => {
+    // cell.classList.add("game-started");
+    cell.addEventListener("click", pvcClickHandler, { once: true });
+  });
+}
+
+function pvcClickHandler(e) {
+  const cell = e.target;
+  currentClass = userClass;
+
+  // placeMark
+  placeMark(cell, currentClass);
+
+  //remove clicked index from cellIndices
+  removeIndex(cell);
 }
 
 function pvpClickHandler(e) {
