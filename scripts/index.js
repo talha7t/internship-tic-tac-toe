@@ -230,7 +230,8 @@ function startGamePvP() {
 
   // added event handler to handle clicks on cells
   cellElements.forEach((cell) => {
-    cell.addEventListener("click", pvpClickHandler);
+    cell.classList.add("game-started");
+    cell.addEventListener("click", pvpClickHandler, { once: true });
   });
 }
 
@@ -240,8 +241,10 @@ function pvpClickHandler(e) {
   const cell = e.target;
   const currentClass = ticTurn ? ticClass : xClass;
   if (currentClass == "x") {
+    console.log(p1Name);
     turnMessage.innerText = p1Name + `'s  turn`;
   } else {
+    console.log(p2Name);
     turnMessage.innerText = p2Name + `'s  turn`;
   }
 
@@ -264,12 +267,42 @@ function pvpClickHandler(e) {
     winRow.forEach((index) => {
       cellElements[index].style.backgroundColor = "rgba(20, 240, 20, 0.685)";
     });
-
+    winMessage.style.display = "block";
     turnMessage.style.display = "none";
+
+    //play again?
+    setTimeout(playAgainPVP, 1000);
   }
 
   //toggle turns
   toggleTurn();
+}
+
+function playAgainPVP() {
+  document.querySelector(".wrapper").classList.add("wrapper-active");
+  const restart = document.querySelector(".yes");
+  const finish = document.querySelector(".no");
+
+  restart.addEventListener("click", () => {
+    p1Name = p1Name;
+    p2Name = p2Name;
+    winMessage.style.display = "none";
+    turnMessage.style.display = "block";
+
+    document.querySelector(".wrapper").classList.remove("wrapper-active");
+    cellElements.forEach((cell) => {
+      cell.style.backgroundColor = "transparent";
+      cell.innerHTML = "";
+      cell.classList.remove("game-finished", "tic", "x", "game-started");
+    });
+
+    startGamePvP();
+  });
+
+  // remove all html from body on not restarting the game
+  finish.addEventListener("click", () => {
+    document.querySelector("body").innerHTML = "";
+  });
 }
 
 function placeMark(cell, currentClass) {
