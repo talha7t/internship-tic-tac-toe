@@ -23,8 +23,9 @@ const winCombinations = [
   [0, 4, 8],
   [2, 4, 6],
 ];
-let cellIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
+let goAgain = false;
+let cellIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 let p1Name = null;
 let p2Name = null;
 let userClass = null;
@@ -46,6 +47,8 @@ function modeSelect() {
     p2Label.style.display = "block";
     gameStart.style.display = "block";
 
+    //event listener on game start button
+
     gameStart.addEventListener("click", () => {
       p1Name = document.querySelector(".player1-name").value;
       p2Name = document.querySelector(".player2-name").value;
@@ -54,6 +57,7 @@ function modeSelect() {
         document.querySelector(".input-error").innerText =
           "Please Enter your Name(s)";
       } else {
+        //game started if both players entered name
         turnMessage.innerText = p1Name + `'s turn`;
         cellElements.forEach((cell) => {
           cell.classList.add("game-started");
@@ -84,6 +88,7 @@ function modeSelect() {
 
 function startGamePvC() {
   //function to start PVC game
+
   document.querySelector(".input-error").style.display = "none";
   document.querySelector(".mark-select-heading").style.display = "block";
   p1Label.style.display = "none";
@@ -95,6 +100,8 @@ function startGamePvC() {
     document.querySelector(".mark-select-heading").style.display = "none";
     if (e.target.classList.contains("tic-mark")) {
       markContainer.style.display = "none";
+
+      // console.log("user selected tic");
       userClass = "tic";
       computerClass = "x";
       cellElements.forEach((cell) => {
@@ -102,6 +109,8 @@ function startGamePvC() {
       });
     } else if (e.target.classList.contains("x-mark")) {
       markContainer.style.display = "none";
+
+      // console.log("user selected x");
       userClass = "x";
       computerClass = "tic";
       cellElements.forEach((cell) => {
@@ -117,6 +126,7 @@ function startGamePvC() {
 
 function pvcClickHandler(e) {
   const cell = e.target;
+  console.log(e.target);
   currentClass = userTurn ? userClass : computerClass;
 
   // placeMark
@@ -128,6 +138,10 @@ function pvcClickHandler(e) {
       ? (winMessage.innerText = p1Name + " wins")
       : (winMessage.innerText = "Computer wins");
 
+    // if (goAgain) {
+    //   console.log("starteg again");
+    // }
+
     cellElements.forEach((cell) => {
       cell.classList.add("game-finished");
       cell.removeEventListener("click", pvcClickHandler);
@@ -138,13 +152,44 @@ function pvcClickHandler(e) {
     winRow.forEach((index) => {
       cellElements[index].style.backgroundColor = "rgba(20, 240, 20, 0.685)";
     });
+
+    // storing array with eining combination cells' indices
+
+    /*---------------------------------------------------------------------------
+                                   REPLAY
+    -------------------------------------------------------------------------- */
+
+    setTimeout(playAgainPVC, 1000);
+  }
+
+  //-------------- Play Again
+
+  function playAgainPVC() {
+    document.querySelector(".wrapper").classList.add("wrapper-active");
+    const restart = document.querySelector(".yes");
+    const finish = document.querySelector(".no");
+
+    restart.addEventListener("click", () => {
+      document.querySelector(".wrapper").classList.remove("wrapper-active");
+      goAgain = true;
+      cellElements.forEach((cell) => {
+        cell.style.backgroundColor = "transparent";
+        cell.innerHTML = "";
+        cell.classList.remove("game-finished", "tic", "x", "game-started");
+      });
+      startGamePvC();
+      cellIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    });
+
+    // remove all html from body on not restarting the game
+    finish.addEventListener("click", () => {
+      document.querySelector("body").innerHTML = "";
+    });
   }
 
   //removeIndex
 
   removeIndex(cell);
-
-  //toggle turn
 }
 
 function removeIndex(cell) {
@@ -165,7 +210,7 @@ function computerTurn(cellIndices) {
 
   let index = cellIndices[computerMark];
 
-  //adding computer class tp the randomly generated index
+  //adding computer class to the randomly generated index
   cellElements[index].classList.add(computerClass);
   //removing element at randomly generated index
   cellIndices.splice(computerMark, 1);
@@ -183,8 +228,9 @@ function startGamePvP() {
   p2Label.style.display = "none";
   gameStart.style.display = "none";
 
+  // added event handler to handle clicks on cells
   cellElements.forEach((cell) => {
-    cell.addEventListener("click", pvpClickHandler, { once: true });
+    cell.addEventListener("click", pvpClickHandler);
   });
 }
 

@@ -223,4 +223,42 @@ button {
 
 .game-finished {
   cursor: not-allowed;
+  pointer-events: none;
+}
+
+/*---------------Restart Game-----------------*/
+
+.wrapper {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper-active {
+  display: flex;
+}
+
+.replay-message {
+  color: #fff;
+  letter-spacing: 2px;
+}
+
+.wrapper button {
+  width: 7rem;
+  padding: 0.5rem;
+  transition: all 0.3s ease;
+  font-weight: 700;
+}
+
+.wrapper button:hover {
+  background-color: #fff;
+  color: #22f145;
 }
