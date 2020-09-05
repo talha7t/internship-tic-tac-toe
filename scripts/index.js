@@ -124,25 +124,16 @@ function pvcClickHandler(e) {
 
   //checkwin
   if (checkWin(currentClass)) {
-    currentClass == userClass
-      ? (winMessage.innerText = p1Name + " wins")
-      : (winMessage.innerText = "Computer wins");
+    declareWinnerPVC(currentClass);
 
-    cellElements.forEach((cell) => {
-      cell.classList.add("game-finished");
-      cell.removeEventListener("click", pvcClickHandler);
-    });
+    // Ask user if they want to play Again
 
-    let winRow = winCells(currentClass);
-
-    winRow.forEach((index) => {
-      cellElements[index].style.backgroundColor = "rgba(20, 240, 20, 0.685)";
-    });
+    // playAgain();
   }
 
   //removeIndex
 
-  removeIndex(cell);
+  removeIndex(cell, currentClass);
 
   //toggle turn
 }
@@ -154,7 +145,7 @@ function removeIndex(cell) {
       cellIndices.splice(cellIndices.indexOf(index), 1);
     }
   });
-  computerTurn(cellIndices);
+  computerTurn(cellIndices, currentClass);
 }
 
 function computerTurn(cellIndices) {
@@ -167,8 +158,34 @@ function computerTurn(cellIndices) {
 
   //adding computer class tp the randomly generated index
   cellElements[index].classList.add(computerClass);
+
+  // no toggle turn so setting current class to computerClass to check if computer wins
+  currentClass = computerClass;
+
+  if (checkWin(currentClass)) {
+    declareWinner(currentClass);
+  }
   //removing element at randomly generated index
   cellIndices.splice(computerMark, 1);
+}
+
+function declareWinnerPVC(currentClass) {
+  // function to display winner message if player or computer wins
+
+  currentClass == userClass
+    ? (winMessage.innerText = p1Name + " wins")
+    : (winMessage.innerText = "Computer wins");
+
+  cellElements.forEach((cell) => {
+    cell.classList.add("game-finished");
+    cell.removeEventListener("click", pvcClickHandler);
+  });
+
+  let winRow = winCells(currentClass);
+
+  winRow.forEach((index) => {
+    cellElements[index].style.backgroundColor = "rgba(20, 240, 20, 0.685)";
+  });
 }
 
 /*----------------------------------------------------------------------------------------------------
@@ -242,9 +259,6 @@ function checkWin(currentClass) {
 function toggleTurn() {
   //toggle turn inn pvp
   ticTurn = !ticTurn;
-
-  //toggle turn in pvc
-  userTurn = !userTurn;
 }
 
 function winCells(currentClass) {

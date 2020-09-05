@@ -231,5 +231,6 @@ button {
 /*------------------------GAME FINISHED----------------------*/
 .game-finished {
   cursor: not-allowed;
+  pointer-events: none;
 }
 /*# sourceMappingURL=style.css.map */
