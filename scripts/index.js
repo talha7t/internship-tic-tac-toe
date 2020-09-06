@@ -10,6 +10,9 @@ const p1Label = document.querySelector(".p1-name");
 const p2Label = document.querySelector(".p2-name");
 const turnMessage = document.querySelector(".turn-message");
 const markContainer = document.querySelector(".mark-container");
+const wrapper = document.querySelector(".wrapper");
+const restart = document.querySelector(".yes");
+const finsh = document.querySelector(".no");
 
 const xClass = "x";
 const ticClass = "tic";
@@ -51,8 +54,7 @@ function modeSelect() {
       p2Name = document.querySelector(".player2-name").value;
 
       if (p1Name === "" || p2Name === "") {
-        document.querySelector(".input-error").innerText =
-          "Please Enter your Name(s)";
+        document.querySelector(".input-error").style.display = "block";
       } else {
         turnMessage.innerText = p1Name + `'s turn`;
         cellElements.forEach((cell) => {
@@ -69,8 +71,7 @@ function modeSelect() {
       p1Name = document.querySelector(".player1-name").value;
 
       if (p1Name === "") {
-        document.querySelector(".input-error").innerText =
-          "Please Enter your Name";
+        document.querySelector(".input-error").style.display = "block";
       } else {
         startGamePvC();
       }
@@ -84,6 +85,7 @@ function modeSelect() {
 
 function startGamePvC() {
   //function to start PVC game
+
   document.querySelector(".input-error").style.display = "none";
   document.querySelector(".mark-select-heading").style.display = "block";
   p1Label.style.display = "none";
@@ -127,8 +129,7 @@ function pvcClickHandler(e) {
     declareWinnerPVC(currentClass);
 
     // Ask user if they want to play Again
-
-    // playAgain();
+    playAgain();
   }
 
   //removeIndex
@@ -138,6 +139,30 @@ function pvcClickHandler(e) {
   //toggle turn
 }
 
+function playAgain() {
+  wrapper.classList.add("wrapper-active");
+
+  restart.addEventListener("click", () => {
+    wrapper.classList.remove("wrapper-active");
+    winMessage.style.display = "none";
+    mode.style.display = "block";
+    mode.value = "select";
+
+    cellElements.forEach((cell) => {
+      cell.classList.remove("start-game", "game-finished", "x", "tic");
+      cell.style.backgroundColor = "transparent";
+    });
+    turnMessage.style.display = "block";
+    cellIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    mode.addEventListener("change", modeSelect);
+  });
+
+  finish.addEventListener("click", () => {
+    document.querySelector("body").style.display = "none";
+    document.querySelector("body").innerHTML = "";
+  });
+}
+
 function removeIndex(cell) {
   //remove clicked index from cellIndices
   cellIndices.forEach((index) => {
@@ -145,7 +170,7 @@ function removeIndex(cell) {
       cellIndices.splice(cellIndices.indexOf(index), 1);
     }
   });
-  computerTurn(cellIndices, currentClass);
+  computerTurn(cellIndices);
 }
 
 function computerTurn(cellIndices) {
@@ -163,7 +188,9 @@ function computerTurn(cellIndices) {
   currentClass = computerClass;
 
   if (checkWin(currentClass)) {
-    declareWinner(currentClass);
+    declareWinnerPVC(currentClass);
+
+    playAgain();
   }
   //removing element at randomly generated index
   cellIndices.splice(computerMark, 1);
@@ -171,7 +198,7 @@ function computerTurn(cellIndices) {
 
 function declareWinnerPVC(currentClass) {
   // function to display winner message if player or computer wins
-
+  winMessage.style.display = "block";
   currentClass == userClass
     ? (winMessage.innerText = p1Name + " wins")
     : (winMessage.innerText = "Computer wins");
@@ -194,6 +221,8 @@ function declareWinnerPVC(currentClass) {
 
 function startGamePvP() {
   //function to start pvp starting game
+
+  console.log("mode pvp " + mode.value);
 
   document.querySelector(".input-error").style.display = "none";
   p1Label.style.display = "none";

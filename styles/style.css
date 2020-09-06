@@ -24,7 +24,8 @@ body {
 
 .winning-message {
   position: absolute;
-  top: 0;
+  z-index: 2;
+  top: 10%;
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
@@ -167,6 +168,7 @@ button {
   position: absolute;
   top: 20%;
   color: white;
+  display: none;
 }
 
 .p1-name,
@@ -232,5 +234,53 @@ button {
 .game-finished {
   cursor: not-allowed;
   pointer-events: none;
+}
+
+/*-------------------------RESTART GAME-----------------------*/
+.wrapper {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.wrapper-active {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.playagain-message {
+  color: #fff;
+  font-size: 3rem;
+}
+
+button.yes,
+button.no {
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  width: 7rem;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+button.yes:hover,
+button.no:hover {
+  background: #fff;
+  color: #22f145;
 }
 /*# sourceMappingURL=style.css.map */
